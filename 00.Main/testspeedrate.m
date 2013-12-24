@@ -1,0 +1,4 @@
+tic
+[ Result ] = getpricing ();
+
+toc

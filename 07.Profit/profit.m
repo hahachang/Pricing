@@ -106,14 +106,14 @@ function [ PV,PV_pre,PV_pos,GP_inforce,TGP_inforce,amt,PV_mid,P1P2,py,py_c,yp,yp
 	% Coupon = BP_profit .* Coupon(y_extend_m);
 
 	%percentage_24
-	j_24  = py_c*2-1;
-	j_24c = 24 - j_24;
+	j_12  = py_c;
+	j_12c = 12 - j_12;
 
-	UP_24  = yp_c;
-	UP_24c = 24/m - 1 - 2*(UP_24-1);
+	UP_12  = yp_c;
+	UP_12c = 24/m - 1 - 2*(UP_24-1);
 
 	%TV interpolation
-	TV_mid = ( ((TV_pre - Coupon) .* j_24c) + (TV_pos .* j_24 ) )/24 + (P1P2_V .* UP_24c /24) ;
+	TV_mid = ( ((TV_pre - Coupon) .* j_12c) + (TV_pos .* j_12 ) )/12 + (P1P2_V .* UP_12c /12) ;
 
 
 
@@ -128,15 +128,15 @@ function [ PV,PV_pre,PV_pos,GP_inforce,TGP_inforce,amt,PV_mid,P1P2,py,py_c,yp,yp
 	[Time_M,Time_m,xx,TT,Time_v,Time_vh] = timeline(1,n,ultra_age);
 	%Create p & q
 	Temp                 = Time_M;
-	Temp(Temp>ultra_age) = 0;                                      %開始去除超過q長度的數字
+	Temp(Temp>ultra_age) = 0;                                      %????��?�??q?�度???�?
 	q_v                  = overlap(q_v,zeros(ultra_age+1,1));
-	q                    = q_v(Temp+1).*(Time_M<=ultra_age);       %用Time_M來對取值，特別注意加1，是因為matlab中array是從1開始而不是0
+	q                    = q_v(Temp+1).*(Time_M<=ultra_age);       %?�Time_M�?????�???�注???1�?????matlab中array?��?1????????
 	
 	%Load exp_Table
     if ismac() == 1
-        exp = csvread('/Users/chentaichang/Documents/MATLAB/Pricing/02.Sources/exp.csv'); %Mac專用 
+        exp = csvread('/Users/chentaichang/Documents/MATLAB/Pricing/02.Sources/exp.csv'); %Mac�?? 
     else
-        exp = csvread('D:\Pricing\02.Sources\exp.csv'); %MS專用 
+        exp = csvread('D:\Pricing\02.Sources\exp.csv'); %MS�?? 
     end
 	exp_q = exp(2:end,2);   %get actual experience percentage of q
 	exp_w = exp(2:end,3);   %get actral experience percentage of withdrawl
